@@ -16,7 +16,7 @@ steps:
 
 ## Inputs
 
-- `rdflint-version`: Optional. The version of rdflint to be installed. Exapmle: `0.1.2`. Defaults to `latest`.
+- `rdflint-version`: Optional. The version of rdflint to be installed. Example: `0.1.2`. Defaults to `latest`.
 
 ## License
 
