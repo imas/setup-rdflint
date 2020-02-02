@@ -10,7 +10,7 @@ steps:
   - uses: actions/setup-java@v1
     with:
       java-version: 11
-  - uses: foooomio/setup-rdflint@v1
+  - uses: imas/setup-rdflint@v1
   - run: rdflint -config rdflint-config.yml
 ```
 
