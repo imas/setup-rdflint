@@ -4,7 +4,9 @@
   "description": "GitHub Action to setup rdflint",
   "main": "dist/index.js",
   "scripts": {
-    "build": "ncc build src/setup-rdflint.ts"
+    "build": "ncc build src/setup-rdflint.ts",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@types/node-fetch": "^2.5.4",
     "@zeit/ncc": "^0.21.0",
+    "prettier": "^1.19.1",
     "typescript": "^3.7.5"
   }
 }
