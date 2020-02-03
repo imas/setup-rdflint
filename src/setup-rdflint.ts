@@ -5,7 +5,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 async function getLatestRdflintVersion(): Promise<string> {
-  const response = await fetch('https://jitpack.io/api/builds/com.github.imas/rdflint/latestOk');
+  const response = await fetch(
+    'https://jitpack.io/api/builds/com.github.imas/rdflint/latestOk'
+  );
   const { version } = await response.json();
 
   if (typeof version !== 'string') {
@@ -18,10 +20,18 @@ async function installRdflint(version: string): Promise<string> {
   const downloadUrl = `https://jitpack.io/com/github/imas/rdflint/${version}/rdflint-${version}.jar`;
 
   const downloadPath = await tc.downloadTool(downloadUrl);
-  const cachePath = await tc.cacheFile(downloadPath, 'rdflint.jar', 'rdflint', version);
+  const cachePath = await tc.cacheFile(
+    downloadPath,
+    'rdflint.jar',
+    'rdflint',
+    version
+  );
 
   const executablePath = path.join(cachePath, 'rdflint');
-  fs.writeFileSync(executablePath, `#!/bin/sh\njava -jar ${cachePath}/rdflint.jar $@`);
+  fs.writeFileSync(
+    executablePath,
+    `#!/bin/sh\njava -jar ${cachePath}/rdflint.jar $@`
+  );
   fs.chmodSync(executablePath, 0o555);
 
   core.addPath(cachePath);
