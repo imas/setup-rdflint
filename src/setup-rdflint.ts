@@ -8,11 +8,21 @@ async function getLatestRdflintVersion(): Promise<string> {
   const response = await fetch(
     'https://jitpack.io/api/builds/com.github.imas/rdflint/latestOk'
   );
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to get the latest rdflint version: ${response.status} ${response.statusText}`
+    );
+  }
+
   const { version } = await response.json();
 
   if (typeof version !== 'string') {
-    throw new Error('Failed to get the latest rdflint version');
+    throw new Error(
+      'Failed to get the latest rdflint version: Unexpected version format'
+    );
   }
+
   return version;
 }
 
@@ -27,11 +37,10 @@ async function installRdflint(version: string): Promise<string> {
     version
   );
 
+  const jarPath = path.join(cachePath, 'rdflint.jar');
   const executablePath = path.join(cachePath, 'rdflint');
-  fs.writeFileSync(
-    executablePath,
-    `#!/bin/sh\njava -jar ${cachePath}/rdflint.jar $@`
-  );
+
+  fs.writeFileSync(executablePath, `#!/bin/sh\njava -jar ${jarPath} $@`);
   fs.chmodSync(executablePath, 0o555);
 
   return cachePath;
