@@ -972,9 +972,12 @@ const fs = __importStar(__webpack_require__(747));
 const path = __importStar(__webpack_require__(622));
 async function getLatestRdflintVersion() {
     const response = await node_fetch_1.default('https://jitpack.io/api/builds/com.github.imas/rdflint/latestOk');
+    if (!response.ok) {
+        throw new Error(`Failed to get the latest rdflint version: ${response.status} ${response.statusText}`);
+    }
     const { version } = await response.json();
     if (typeof version !== 'string') {
-        throw new Error('Failed to get the latest rdflint version');
+        throw new Error('Failed to get the latest rdflint version: Unexpected version format');
     }
     return version;
 }
@@ -982,10 +985,10 @@ async function installRdflint(version) {
     const downloadUrl = `https://jitpack.io/com/github/imas/rdflint/${version}/rdflint-${version}.jar`;
     const downloadPath = await tc.downloadTool(downloadUrl);
     const cachePath = await tc.cacheFile(downloadPath, 'rdflint.jar', 'rdflint', version);
+    const jarPath = path.join(cachePath, 'rdflint.jar');
     const executablePath = path.join(cachePath, 'rdflint');
-    fs.writeFileSync(executablePath, `#!/bin/sh\njava -jar ${cachePath}/rdflint.jar $@`);
+    fs.writeFileSync(executablePath, `#!/bin/sh\njava -jar ${jarPath} $@`);
     fs.chmodSync(executablePath, 0o555);
-    core.addPath(cachePath);
     return cachePath;
 }
 async function run() {
@@ -999,6 +1002,7 @@ async function run() {
             console.log('Installing rdflint ' + version);
             rdflintPath = await installRdflint(version);
         }
+        core.addPath(rdflintPath);
     }
     catch (e) {
         core.setFailed(e.message);
