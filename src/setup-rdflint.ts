@@ -34,7 +34,6 @@ async function installRdflint(version: string): Promise<string> {
   );
   fs.chmodSync(executablePath, 0o555);
 
-  core.addPath(cachePath);
   return cachePath;
 }
 
@@ -50,6 +49,8 @@ async function run(): Promise<void> {
       console.log('Installing rdflint ' + version);
       rdflintPath = await installRdflint(version);
     }
+
+    core.addPath(rdflintPath);
   } catch (e) {
     core.setFailed(e.message);
   }
