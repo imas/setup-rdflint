@@ -6859,7 +6859,7 @@ async function installRdflint(version) {
     const cachePath = await _actions_tool_cache__WEBPACK_IMPORTED_MODULE_2__.cacheFile(downloadPath, 'rdflint.jar', 'rdflint', version);
     const jarPath = path__WEBPACK_IMPORTED_MODULE_4__.join(cachePath, 'rdflint.jar');
     const executablePath = path__WEBPACK_IMPORTED_MODULE_4__.join(cachePath, 'rdflint');
-    fs__WEBPACK_IMPORTED_MODULE_3__.writeFileSync(executablePath, `#!/bin/sh\njava -jar ${jarPath} $@`);
+    fs__WEBPACK_IMPORTED_MODULE_3__.writeFileSync(executablePath, `#!/bin/sh\nexec java -jar ${jarPath} "$@"`);
     fs__WEBPACK_IMPORTED_MODULE_3__.chmodSync(executablePath, 0o555);
     return cachePath;
 }

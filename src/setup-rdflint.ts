@@ -40,7 +40,7 @@ async function installRdflint(version: string): Promise<string> {
   const jarPath = path.join(cachePath, 'rdflint.jar');
   const executablePath = path.join(cachePath, 'rdflint');
 
-  fs.writeFileSync(executablePath, `#!/bin/sh\njava -jar ${jarPath} $@`);
+  fs.writeFileSync(executablePath, `#!/bin/sh\nexec java -jar ${jarPath} "$@"`);
   fs.chmodSync(executablePath, 0o555);
 
   return cachePath;
