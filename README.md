@@ -1,4 +1,5 @@
 # setup-rdflint
+
 GitHub Action to setup [rdflint](https://github.com/imas/rdflint)
 
 ## Usage
@@ -7,8 +8,9 @@ GitHub Action to setup [rdflint](https://github.com/imas/rdflint)
 runs-on: ubuntu-latest
 steps:
   - uses: actions/checkout@v2
-  - uses: actions/setup-java@v1
+  - uses: actions/setup-java@v2
     with:
+      distribution: adopt
       java-version: 11
   - uses: imas/setup-rdflint@v1
   - run: rdflint -config rdflint-config.yml

@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "ncc build src/setup-rdflint.ts",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts"
+    "format": "prettier --write .",
+    "format-check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -20,21 +20,18 @@
   },
   "homepage": "https://github.com/imas/setup-rdflint#readme",
   "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@actions/tool-cache": "^1.6.0",
+    "@actions/core": "^1.2.7",
+    "@actions/tool-cache": "^1.6.1",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.5.7",
-    "@vercel/ncc": "^0.24.1",
-    "husky": "^4.3.0",
-    "prettier": "^2.1.2",
-    "typescript": "^4.0.3"
+    "@types/node-fetch": "^2.5.10",
+    "@vercel/ncc": "^0.28.3",
+    "prettier": "^2.2.1",
+    "simple-git-hooks": "^2.3.1",
+    "typescript": "^4.2.4"
   },
-  "husky": {
-    "skipCI": true,
-    "hooks": {
-      "pre-commit": "npm run build && npm run format"
-    }
+  "simple-git-hooks": {
+    "pre-commit": "npm run format && npm run build"
   }
 }
