@@ -5,25 +5,23 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 async function getLatestRdflintVersion(): Promise<string> {
-  const response = await fetch(
-    'https://jitpack.io/api/builds/com.github.imas/rdflint/latestOk'
-  );
+  const url = 'https://jitpack.io/api/builds/com.github.imas/rdflint/latestOk';
+
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(
-      `Failed to get the latest rdflint version: ${response.status} ${response.statusText}`
+      `${url} is currently unavailable: ${response.status} ${response.statusText}`
     );
   }
 
-  const { version } = await response.json();
+  const json: any = await response.json();
 
-  if (typeof version !== 'string') {
-    throw new Error(
-      'Failed to get the latest rdflint version: Unexpected version format'
-    );
+  if (typeof json.version !== 'string') {
+    throw new Error(`Could not find the latest version: ${json.version}`);
   }
 
-  return version;
+  return json.version;
 }
 
 async function installRdflint(version: string): Promise<string> {
@@ -47,22 +45,20 @@ async function installRdflint(version: string): Promise<string> {
 }
 
 async function run(): Promise<void> {
-  try {
-    let version = core.getInput('rdflint-version');
-    if (!version || version === 'latest') {
-      version = await getLatestRdflintVersion();
-    }
-
-    let rdflintPath = tc.find('rdflint', version);
-    if (!rdflintPath) {
-      console.log('Installing rdflint ' + version);
-      rdflintPath = await installRdflint(version);
-    }
-
-    core.addPath(rdflintPath);
-  } catch (e) {
-    core.setFailed(e.message);
+  let version = core.getInput('rdflint-version');
+  if (!version || version === 'latest') {
+    version = await getLatestRdflintVersion();
   }
+
+  let rdflintPath = tc.find('rdflint', version);
+  if (!rdflintPath) {
+    core.info('Installing rdflint ' + version);
+    rdflintPath = await installRdflint(version);
+  }
+
+  core.addPath(rdflintPath);
 }
 
-run();
+run().catch((e: Error) => {
+  core.setFailed(e.message);
+});
