@@ -7,12 +7,12 @@ GitHub Action to setup [rdflint](https://github.com/imas/rdflint)
 ```yml
 runs-on: ubuntu-latest
 steps:
-  - uses: actions/checkout@v3
-  - uses: actions/setup-java@v3
+  - uses: actions/checkout@v4
+  - uses: actions/setup-java@v4
     with:
       distribution: temurin
       java-version: 17
-  - uses: imas/setup-rdflint@v2
+  - uses: imas/setup-rdflint@v3
   - run: rdflint -config rdflint-config.yml
 ```
 

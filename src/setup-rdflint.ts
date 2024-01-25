@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import * as core from '@actions/core';
 import * as tc from '@actions/tool-cache';
 import * as fs from 'fs';
@@ -11,14 +10,14 @@ async function getLatestRdflintVersion(): Promise<string> {
 
   if (!response.ok) {
     throw new Error(
-      `${url} is currently unavailable: ${response.status} ${response.statusText}`
+      `${url} is currently unavailable: ${response.status} ${response.statusText}`,
     );
   }
 
-  const json: any = await response.json();
+  const json = await response.json();
 
-  if (typeof json.version !== 'string') {
-    throw new Error(`Could not find the latest version: ${json.version}`);
+  if (typeof json?.version !== 'string') {
+    throw new Error(`Could not find the latest version: ${json?.version}`);
   }
 
   return json.version;
@@ -32,7 +31,7 @@ async function installRdflint(version: string): Promise<string> {
     downloadPath,
     'rdflint.jar',
     'rdflint',
-    version
+    version,
   );
 
   const jarPath = path.join(cachePath, 'rdflint.jar');
