@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as tc from '@actions/tool-cache';
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 async function getLatestRdflintVersion(): Promise<string> {
   const url = 'https://jitpack.io/api/builds/com.github.imas/rdflint/latestOk';

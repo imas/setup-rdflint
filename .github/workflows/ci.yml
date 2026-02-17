@@ -7,24 +7,24 @@ on:
   pull_request:
 
 jobs:
-  rdflint:
+  setup-rdflint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
       - uses: ./
       - run: rdflint -v
 
-  build:
+  check-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm run build
-      - run: npm run format-check
+      - uses: actions/checkout@v6
+      - uses: jdx/mise-action@v3
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run format-check
+      - run: pnpm run type-check
+      - run: pnpm run build
+      - run: git diff --quiet -- dist/index.js

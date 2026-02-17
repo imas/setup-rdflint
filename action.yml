@@ -1,10 +1,10 @@
-name: 'Setup rdflint'
-description: 'Setup rdflint and add it to the PATH'
+name: Setup rdflint
+description: Setup rdflint and add it to the PATH
 inputs:
   rdflint-version:
-    description: 'The version of rdflint to be installed'
+    description: The version of rdflint to be installed
     required: false
-    default: 'latest'
+    default: latest
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: node24
+  main: dist/index.js
