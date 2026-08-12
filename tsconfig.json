@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     // Environment Settings
-    "module": "commonjs",
+    "module": "nodenext",
     "target": "es2024",
+    "lib": ["es2024"],
     "types": ["node"],
-    "noEmit": true,
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
@@ -20,9 +20,15 @@
 
     // Recommended Options
     "strict": true,
+    "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    // Other Options
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true
   }
 }

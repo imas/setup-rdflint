@@ -1,5 +1,13 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["esbuild", "imas", "oxfmt", "rdflint", "temurin"]
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "files.readonlyInclude": {
+    "**/pnpm-lock.yaml": true,
+    "dist/**": true
+  },
+  "search.exclude": {
+    "**/pnpm-lock.yaml": true,
+    "dist/**": true
+  },
+  "cSpell.words": ["imas", "oxfmt", "rdflint", "temurin"]
 }
